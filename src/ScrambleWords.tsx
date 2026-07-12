@@ -53,16 +53,53 @@ const ScrambleWords = () => {
 
   const handleGuessSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (guess === currentWord) {
+      const newWords = words.slice(1);
+
+      confetti({
+        particleCount: 100,
+        spread: 120,
+        origin: { y: 0.6 },
+      });
+
+      setPoints((prev) => prev + 1);
+      setGuess('');
+      setWords(newWords);
+      setCurrentWord(newWords[0]);
+      return;
+    }
+
+    setErrorCounter((prev) => prev + 1);
+    setGuess('');
+
+    if (errorCounter + 1 >= maxAllowErrors) {
+      setIsGameOver(true);
+    }
   };
 
   const handleSkip = () => {
+    if (skipCounter >= maxSkips) return;
+
+    const updateWords = words.splice(1);
+
     setSkipCounter((prev) => prev + 1);
-    setCurrentWord(words[5]);
-    console.log(skipCounter);
+    setWords(updateWords);
+    setCurrentWord(updateWords[0]);
+    setScrambledWord(scrambleWord(updateWords[0]));
+    setGuess('');
   };
 
   const handlePlayAgain = () => {
-    window.location.reload();
+    const newArray = shuffleArray(GAME_WORDS);
+    setPoints(0);
+    setErrorCounter(0);
+    setGuess('');
+    setWords(newArray);
+    setCurrentWord(newArray[0]);
+    setIsGameOver(false);
+    setSkipCounter(0);
+    setScrambledWord(scrambleWord(newArray[0]));
   };
 
   if (words.length === 0) {
