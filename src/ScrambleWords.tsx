@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import confetti from 'canvas-confetti';
 
@@ -29,68 +29,28 @@ const ScrambleWords = () => {
     skipCounter,
     totalWords,
   } = state;
-  // const [words, setWords] = useState(shuffleArray(GAME_WORDS));
-  // const [currentWord, setCurrentWord] = useState(words[0]);
-  // const [scrambledWord, setScrambledWord] = useState(scrambleWord(currentWord));
 
-  // const [guess, setGuess] = useState('');
-  // const [points, setPoints] = useState(16);
-  // const [errorCounter, setErrorCounter] = useState(0);
-  // const [maxAllowErrors, setMaxAllowError] = useState(3);
+  const handleGuessSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
-  // const [skipCounter, setSkipCounter] = useState(0);
-  // const [maxSkips, setMaxSkips] = useState(3);
+    if (guess === currentWord) {
+      confetti({ particleCount: 100, spread: 120, origin: { y: 0.6 } });
+    }
 
-  // const [isGameOver, setIsGameOver] = useState(false);
+    dispatch({ type: 'CHECK_ANSWER' });
+  };
 
-  // const handleGuessSubmit = (event: React.FormEvent) => {
-  //   event.preventDefault();
+  const setGuess = (value: string) => {
+    dispatch({ type: 'SET_GUESS', payload: value });
+  };
 
-  //   if (guess === currentWord) {
-  //     const newWords = words.slice(1);
+  const handleSkip = () => {
+    dispatch({ type: 'SKIP_WORD' });
+  };
 
-  //     confetti({ particleCount: 100, spread: 120, origin: { y: 0.6 } });
-
-  //     setPoints((prev) => prev + 1);
-  //     setGuess('');
-  //     setWords(newWords);
-  //     setCurrentWord(newWords[0]);
-  //     setScrambledWord(scrambleWord(newWords[0]));
-  //     return;
-  //   }
-
-  //   setErrorCounter((prev) => prev + 1);
-  //   setGuess('');
-
-  //   if (errorCounter + 1 >= maxAllowErrors) {
-  //     setIsGameOver(true);
-  //   }
-  // };
-
-  // const handleSkip = () => {
-  //   if (skipCounter >= maxSkips) return;
-
-  //   const updateWords = words.slice(1);
-
-  //   setSkipCounter((prev) => prev + 1);
-  //   setWords(updateWords);
-  //   setCurrentWord(updateWords[0]);
-  //   setScrambledWord(scrambleWord(updateWords[0]));
-  //   setGuess('');
-  // };
-
-  // const handlePlayAgain = () => {
-  //   const newArray = shuffleArray(GAME_WORDS);
-
-  //   setPoints(0);
-  //   setErrorCounter(0);
-  //   setGuess('');
-  //   setWords(newArray);
-  //   setCurrentWord(newArray[0]);
-  //   setIsGameOver(false);
-  //   setSkipCounter(0);
-  //   setScrambledWord(scrambleWord(newArray[0]));
-  // };
+  const handlePlayAgain = () => {
+    dispatch({ type: 'START_NEW_GAME', payload: getInitialState() });
+  };
 
   if (words.length === 0) {
     return (
