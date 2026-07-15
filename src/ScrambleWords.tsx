@@ -11,7 +11,7 @@ import { FooterWords } from './components/scrambleWords/FooterWords';
 import {
   getInitialState,
   scrambledWordReducer,
-} from './reducers/scrambleWordsReducer';
+} from './reducer/scrambleWordsReducer';
 
 const ScrambleWords = () => {
   const [state, dispatch] = useReducer(scrambledWordReducer, getInitialState());
