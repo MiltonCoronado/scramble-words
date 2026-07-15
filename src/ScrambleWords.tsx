@@ -66,7 +66,7 @@ const ScrambleWords = () => {
           <div>Saltos: {skipCounter}</div>
           <br />
           <div>
-            <button onClick={handlePlayAgain} className="btn">
+            <button onClick={handlePlayAgain} className="btn cursor-pointer">
               Jugar de nuevo
             </button>
           </div>
