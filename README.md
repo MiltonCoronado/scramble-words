@@ -1,5 +1,9 @@
 # Reducer explanation.
 
+first my URL hahaha sorry for that.
+
+https://miltoncoronado.github.io/scramble-words/
+
 The reducer is the central logic engine for the game. It receives the current state and an action, then returns a new state based on that action. In this project, the reducer is responsible for managing everything that changes during gameplay: the current word, the scrambled version, the user’s guess, the score, the number of errors, the number of skips, and whether the game is over.
 
 In TypeScript, this is modeled with a state interface and an action union. The state describes all the data the UI needs, while the actions define the possible user events or game events. For example, the game can receive actions such as setting the guess, checking the answer, skipping a word, or starting a new game.
